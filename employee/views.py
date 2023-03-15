@@ -487,7 +487,7 @@ class UpdateCityView(generics.GenericAPIView):
                 return rest_utils.build_response(
                     status.HTTP_200_OK, message, data=serializer.data, errors=None
                 )
-            else:
+            else: 
                 message="Please Login"
                 return rest_utils.build_response(
                     status.HTTP_200_OK, message, data=message, errors=None
