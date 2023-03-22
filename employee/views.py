@@ -458,42 +458,42 @@ class ForgetPasswordView(generics.GenericAPIView):
 #                 status.HTTP_500_INTERNAL_SERVER_ERROR, message, data=None, errors=str(e)
 #             )
 
-class UpdateCityView(generics.GenericAPIView):
-    serializer_class=UserProfileSerializer
-    def put(self, request,pk):
-        self.serializer_class=UserProfileSerializer
-        try:
-            user = User.objects.get(pk=pk)
-            serializer = self.serializer_class(user)
-            data=request.data
-            if user:
-                latitude=data["latitude"]
-                longitude=data["longitude"]
-                geolocator = Nominatim(user_agent="geoapiExercises")
-                location = geolocator.reverse(latitude+","+longitude)
-                address = location.raw['address']
-                city = address.get('city', '')
-                if city:
-                    city = address.get('city', '')
-                else:
-                    state_district=address.get('state_district', '')
-                    city=state_district.split(" ")
-                    city=city[0]
-                state = address.get('state', '')
-                user.city=city
-                user.state=state
-                user.save()
-                message="user city updated"
-                return rest_utils.build_response(
-                    status.HTTP_200_OK, message, data=serializer.data, errors=None
-                )
-            else: 
-                message="Please Login"
-                return rest_utils.build_response(
-                    status.HTTP_200_OK, message, data=message, errors=None
-                )
-        except Exception as e:
-            message = rest_utils.HTTP_REST_MESSAGES["500"]
-            return rest_utils.build_response(
-                status.HTTP_500_INTERNAL_SERVER_ERROR, message, data=None, errors=str(e)
-            )
+# class UpdateCityView(generics.GenericAPIView):
+#     serializer_class=UserProfileSerializer
+#     def put(self, request,pk):
+#         self.serializer_class=UserProfileSerializer
+#         try:
+#             user = User.objects.get(pk=pk)
+#             serializer = self.serializer_class(user)
+#             data=request.data
+#             if user:
+#                 latitude=data["latitude"]
+#                 longitude=data["longitude"]
+#                 geolocator = Nominatim(user_agent="geoapiExercises")
+#                 location = geolocator.reverse(latitude+","+longitude)
+#                 address = location.raw['address']
+#                 city = address.get('city', '')
+#                 if city:
+#                     city = address.get('city', '')
+#                 else:
+#                     state_district=address.get('state_district', '')
+#                     city=state_district.split(" ")
+#                     city=city[0]
+#                 state = address.get('state', '')
+#                 user.city=city
+#                 user.state=state
+#                 user.save()
+#                 message="user city updated"
+#                 return rest_utils.build_response(
+#                     status.HTTP_200_OK, message, data=serializer.data, errors=None
+#                 )
+#             else: 
+#                 message="Please Login"
+#                 return rest_utils.build_response(
+#                     status.HTTP_200_OK, message, data=message, errors=None
+#                 )
+#         except Exception as e:
+#             message = rest_utils.HTTP_REST_MESSAGES["500"]
+#             return rest_utils.build_response(
+#                 status.HTTP_500_INTERNAL_SERVER_ERROR, message, data=None, errors=str(e)
+#             )

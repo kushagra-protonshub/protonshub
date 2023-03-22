@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "rest_framework.authtoken",
     "django_filters",
     "django_otp",
+    'django_crontab',
     # "djrichtextfield",
 ]
 
@@ -172,3 +173,6 @@ EMAIL_HOST_PASSWORD = SENDGRID_API_KEY
 
 
 # EMAIL_HOST_USER = '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' # Set to your SendGrid API key
+
+CRONJOBS = [   ('0 1 1 * *', 'timesheet.management.commands.generate_timesheet_csv'),]
+CRONJOBS = [('*/10 * * * * *', 'timesheet.management.commands.test')]
